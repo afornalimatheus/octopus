@@ -5,9 +5,13 @@ export class CreateUserDto {
 }
 
 export class User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
+  alreadyDoneTutorial: boolean;
+  exp: number;
+  life: number;
   createdAt: Date;
+  updatedAt: Date;
 }
