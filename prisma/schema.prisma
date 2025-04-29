@@ -14,9 +14,13 @@ datasource db {
 }
 
 model user {
-  id        Int     @id @default(autoincrement())
-  name      String
-  email     String  @unique
-  password  String
-  createdAt DateTime @default(now())
+  id                  String   @id @default(cuid())
+  name                String
+  email               String   @unique
+  password            String
+  exp                 Int      @default(0)
+  life                Int      @default(3)
+  alreadyDoneTutorial Boolean  @default(false) @map("already_done_tutorial")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at")
 }
