@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user-dto';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -13,9 +13,14 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(AuthGuard)
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/complete-tutorial')
+  async completeTutorial(@Param('id') id: string) {
+    return this.usersService.completeTutorial(id);
   }
 }

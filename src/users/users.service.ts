@@ -29,6 +29,13 @@ export class UsersService {
     });
   }
 
+  async completeTutorial(id: string) {
+    return this.prisma.user.update({
+      where: { id },
+      data: { alreadyDoneTutorial: true },
+    });
+  }
+
   async hashPassword(password: string): Promise<string> {
     const saltRounds = 10;
     return await bcrypt.hash(password, saltRounds);
