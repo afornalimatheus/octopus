@@ -23,4 +23,34 @@ export class UsersController {
   async completeTutorial(@Param('id') id: string) {
     return this.usersService.completeTutorial(id);
   }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/remove-life')
+  async removeLife(@Param('id') id: string) {
+    return this.usersService.removeLife(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/add-life')
+  async addLife(@Param('id') id: string) {
+    return this.usersService.addLife(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/recovery-life')
+  async recoveryLife(@Param('id') id: string) {
+    return this.usersService.recoveryLife(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/add-exp')
+  async addExp(@Param('id') id: string, @Body('exp') exp: number) {
+    return this.usersService.addExp(id, exp);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/remove-exp')
+  async removeExp(@Param('id') id: string, @Body('exp') exp: number) {
+    return this.usersService.removeExp(id, exp);
+  }
 }
