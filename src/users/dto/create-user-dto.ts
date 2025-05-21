@@ -16,6 +16,7 @@ export class User {
   email: string;
   password: string;
   alreadyDoneTutorial: boolean;
+  lastLifeLostAt?: Date | null;
   exp: number;
   life: number;
   createdAt: Date;

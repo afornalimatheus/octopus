@@ -21,6 +21,7 @@ model user {
   exp                 Int      @default(0)
   life                Int      @default(3)
   alreadyDoneTutorial Boolean  @default(false) @map("already_done_tutorial")
+  lastLifeLostAt      DateTime? @map("last_life_lost_at")
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @default(now()) @updatedAt @map("updated_at")
 }

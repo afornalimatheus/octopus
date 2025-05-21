@@ -75,6 +75,15 @@ export class UsersService {
 
     const newLife = user.life - 1;
 
+    if (newLife === 0) {
+      await this.prisma.user.update({
+        where: { id },
+        data: {
+          lastLifeLostAt: new Date(),
+        },
+      });
+    }
+
     const updatedUser = await this.prisma.user.update({
       where: { id },
       data: { life: newLife },
@@ -173,5 +182,13 @@ export class UsersService {
     });
 
     return updatedUser;
+  }
+
+  async findUsersWithOneLife() {
+    return this.prisma.user.findMany({
+      where: {
+        life: 0,
+      },
+    });
   }
 }
