@@ -1,0 +1,15 @@
+meta {
+  name: get contents
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{URL_DOMAIN}}/content
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}

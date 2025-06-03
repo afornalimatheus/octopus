@@ -22,6 +22,67 @@ model user {
   life                Int      @default(3)
   alreadyDoneTutorial Boolean  @default(false) @map("already_done_tutorial")
   lastLifeLostAt      DateTime? @map("last_life_lost_at")
+  answers             answer[]
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model module {
+  id        String    @id @default(cuid())
+  label     String    @db.VarChar(120)
+  contents  content[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+}
+
+model content {
+  id          String     @id @default(cuid())
+  label       String     @db.VarChar(120)
+  moduleId    String
+  module      module     @relation(fields: [moduleId], references: [id])
+  duration    Int
+  hits        Int
+  exp         Int
+  completedAt DateTime?  @map("completed_at")
+  exercises   exercise[]
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @default(now()) @updatedAt @map("updated_at")
+  deletedAt   DateTime?  @map("deleted_at")
+}
+
+enum ExerciseType {
+  fill_blanks
+  only_choice
+  true_false
+  combining_pairs
+}
+
+model exercise {
+  id          String        @id @default(cuid())
+  contentId   String
+  content     content       @relation(fields: [contentId], references: [id])
+  type        ExerciseType
+  description String        @db.Text
+  template    String        @db.Text
+  data        Json
+  blanks      String        @db.Text
+  answer      String        @db.Text
+  explanation String        @db.Text
+  answers     answer[]
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at")
+  deletedAt   DateTime?     @map("deleted_at")
+}
+
+model answer {
+  id         String     @id @default(cuid())
+  userId     String
+  user       user       @relation(fields: [userId], references: [id])
+  exerciseId String
+  exercise   exercise   @relation(fields: [exerciseId], references: [id])
+  answer     String     @db.VarChar(300)
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @default(now()) @updatedAt @map("updated_at")
+  deletedAt  DateTime?  @map("deleted_at")
 }

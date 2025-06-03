@@ -1,0 +1,15 @@
+meta {
+  name: get modules
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{URL_DOMAIN}}/module
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}

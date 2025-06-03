@@ -7,6 +7,10 @@ import { UsersModule } from './users/users.module';
 import { RankingModule } from './ranking/ranking.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ScheduleModule as MyScheduleModule } from './schedule/schedule.module';
+import { ContentModule } from './content/content.module';
+import { ModuleModule } from './module/module.module';
+import { ExerciseModule } from './exercise/exercise.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -25,6 +29,10 @@ import { ScheduleModule as MyScheduleModule } from './schedule/schedule.module';
     RankingModule,
     ScheduleModule.forRoot(),
     MyScheduleModule,
+    ContentModule,
+    ModuleModule,
+    ExerciseModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
