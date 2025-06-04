@@ -1,0 +1,19 @@
+meta {
+  name: get module with content
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{URL_DOMAIN}}/module/{{moduleId}}/contents
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  moduleId: cmbga6ttu0000l91k8kixidwr
+}

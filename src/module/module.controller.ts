@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ModuleService } from './module.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import type { CreateModuleDto } from './dto/module-dto';
@@ -11,6 +11,12 @@ export class ModuleController {
   @Post()
   async create(@Body() body: CreateModuleDto) {
     return this.moduleService.create(body);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/:idModule/contents')
+  async getContentModule(@Param('idModule') idModule: string) {
+    return this.moduleService.getContentModule(idModule);
   }
 
   @UseGuards(AuthGuard)

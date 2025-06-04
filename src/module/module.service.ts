@@ -14,6 +14,25 @@ export class ModuleService {
     return module;
   }
 
+  async getContentModule(idModule: string): Promise<ModuleDto> {
+    const module = await this.prisma.module.findUnique({
+      where: { id: idModule },
+      include: {
+        contents: {
+          orderBy: {
+            exp: 'desc',
+          },
+        },
+      },
+    });
+
+    if (!module) {
+      throw new Error('O módulo enviado não existe.');
+    }
+
+    return module;
+  }
+
   async getModule(): Promise<ModuleDto[]> {
     const modules = await this.prisma.module.findMany({
       orderBy: {
