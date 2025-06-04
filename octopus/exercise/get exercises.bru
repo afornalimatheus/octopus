@@ -1,0 +1,15 @@
+meta {
+  name: get exercises
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{URL_DOMAIN}}/exercise
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}

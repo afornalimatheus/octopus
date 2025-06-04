@@ -1,0 +1,19 @@
+meta {
+  name: get content with exercises
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{URL_DOMAIN}}/content/{{contentId}}/exercises
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  contentId: cmbhne09v0003l98vyk6hues5
+}
