@@ -17,7 +17,6 @@ export class ContentDto {
 
 export class CreateContentDto {
   label: string;
-  moduleId: string;
   duration: number;
   exp: number;
 

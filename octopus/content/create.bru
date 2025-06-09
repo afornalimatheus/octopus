@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{URL_DOMAIN}}/content
+  url: {{URL_DOMAIN}}/content/module/{{moduleId}}
   body: json
   auth: inherit
 }
@@ -16,6 +16,12 @@ headers {
 
 body:json {
   {
-    
+    "label": "Agrupamento de dados",
+    "duration": 50,
+    "exp": 50
   }
+}
+
+vars:pre-request {
+  moduleId: cmbga6ttu0000l91k8kixidwr
 }

@@ -6,17 +6,45 @@ import { ExerciseDto } from './dto/exercise-dto';
 export class ExerciseService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getExercise(): Promise<ExerciseDto | null> {
-    const exercise = await this.prisma.exercise.findFirst({
+  async create(exerciseDto: ExerciseDto): Promise<ExerciseDto> {
+    const {
+      contentId,
+      type,
+      description,
+      template,
+      data,
+      blanks,
+      answer,
+      explanation,
+    } = exerciseDto;
+
+    const exercise = await this.prisma.exercise.create({
+      data: {
+        contentId,
+        type,
+        description,
+        template,
+        data: data ?? {},
+        blanks,
+        answer,
+        explanation,
+      },
+    });
+
+    return exercise;
+  }
+
+  async getExercise(): Promise<ExerciseDto[] | null> {
+    const exercises = await this.prisma.exercise.findMany({
       orderBy: {
         createdAt: 'desc',
       },
     });
 
-    if (!exercise) {
+    if (!exercises) {
       throw new Error('No exercise found');
     }
 
-    return exercise;
+    return exercises;
   }
 }
