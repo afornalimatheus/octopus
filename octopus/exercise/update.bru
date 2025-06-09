@@ -1,0 +1,19 @@
+meta {
+  name: update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{URL_DOMAIN}}/exercise/{{exerciseId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  exerciseId: 
+}

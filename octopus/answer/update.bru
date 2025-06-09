@@ -1,0 +1,25 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{URL_DOMAIN}}/answers/{{answerId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+body:json {
+  {
+    "answer": "AHUHUHUHUHUA"
+  }
+}
+
+vars:pre-request {
+  answerId: cmbj4cyop0001l9ep6l8b7eof
+}

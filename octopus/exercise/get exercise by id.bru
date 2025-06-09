@@ -1,11 +1,11 @@
 meta {
-  name: get content with exercises
+  name: get exercise by id
   type: http
   seq: 2
 }
 
 get {
-  url: {{URL_DOMAIN}}/content/{{contentId}}/exercises
+  url: {{URL_DOMAIN}}/exercise/{{exerciseId}}
   body: none
   auth: inherit
 }
@@ -15,5 +15,5 @@ headers {
 }
 
 vars:pre-request {
-  contentId: cmbhne09v0003l98vyk6hues5
+  exerciseId: cmbj24a1v0001l91uvvsso3pu
 }

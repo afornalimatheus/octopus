@@ -1,0 +1,19 @@
+meta {
+  name: delete exercise
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{URL_DOMAIN}}/exercise/{{exerciseId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  exerciseId: cmbhpw45p0001l984vcwdlwaj
+}

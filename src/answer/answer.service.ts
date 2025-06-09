@@ -26,6 +26,9 @@ export class AnswerService {
   }
 
   async remove(id: string) {
-    return this.prisma.answer.delete({ where: { id } });
+    return this.prisma.answer.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

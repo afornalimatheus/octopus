@@ -1,0 +1,25 @@
+meta {
+  name: update
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{URL_DOMAIN}}/module/{{moduleId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+body:json {
+  {
+    "label": "teste"
+  }
+}
+
+vars:pre-request {
+  moduleId: cmbj3ytm60000l9aj274c1gu1
+}

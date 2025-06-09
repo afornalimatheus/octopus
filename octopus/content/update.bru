@@ -1,11 +1,11 @@
 meta {
-  name: create module
+  name: update
   type: http
   seq: 4
 }
 
-post {
-  url: {{URL_DOMAIN}}/module
+patch {
+  url: {{URL_DOMAIN}}/content/{{contentId}}
   body: json
   auth: inherit
 }
@@ -15,7 +15,9 @@ headers {
 }
 
 body:json {
-  {
-    "label": "TESTE"
-  }
+  {}
+}
+
+vars:pre-request {
+  contentId: 
 }

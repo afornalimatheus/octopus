@@ -1,0 +1,19 @@
+meta {
+  name: delete
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{URL_DOMAIN}}/module/{{moduleId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  moduleId: cmbj3ytm60000l9aj274c1gu1
+}
