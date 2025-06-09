@@ -1,0 +1,19 @@
+meta {
+  name: delete
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{URL_DOMAIN}}/answers/{{answerId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  answerId: cmbj4cyop0001l9ep6l8b7eof
+}

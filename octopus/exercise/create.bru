@@ -1,7 +1,7 @@
 meta {
   name: create
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
@@ -20,7 +20,12 @@ body:json {
     "type": "fill_blanks",
     "description": "lalalala",
     "template": "SELECT __columns__ FROM __table__;",
-    "data": "[{ label = 'table 1. data: [] }]",
+    "data": [
+    {
+      "label": "table 1",
+      "data": []
+    }
+  ],
     "blanks": "['__columns__', '__table__']",
     "answer": "SELECT name, age FROM students;",
     "explanation": "Essa consulta utiliza a cláusula SELECT para exibir as colunas name e age, que correspondem ao nome e à idade dos estudantes, respectivamente. A cláusula FROM especifica a tabela students como a fonte dos dados."
