@@ -1,0 +1,15 @@
+meta {
+  name: get all user progress
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{URL_DOMAIN}}/user-progress
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}

@@ -11,6 +11,7 @@ import { ContentModule } from './content/content.module';
 import { ModuleModule } from './module/module.module';
 import { ExerciseModule } from './exercise/exercise.module';
 import { AnswerModule } from './answer/answer.module';
+import { UserProgressModule } from './user-progress/user-progress.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AnswerModule } from './answer/answer.module';
     ModuleModule,
     ExerciseModule,
     AnswerModule,
+    UserProgressModule,
   ],
   controllers: [AppController],
   providers: [AppService],
