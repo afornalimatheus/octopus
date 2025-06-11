@@ -1,0 +1,19 @@
+meta {
+  name: delete user progress
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{URL_DOMAIN}}/user-progress/{{userId}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+vars:pre-request {
+  userId: cmanofs6l0001qj15mqfthsc2
+}

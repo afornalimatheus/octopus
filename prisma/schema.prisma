@@ -23,6 +23,7 @@ model user {
   alreadyDoneTutorial Boolean  @default(false) @map("already_done_tutorial")
   lastLifeLostAt      DateTime? @map("last_life_lost_at")
   answers             answer[]
+  userProgresses      UserProgress[]
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @default(now()) @updatedAt @map("updated_at")
 }
@@ -41,11 +42,9 @@ model content {
   label       String     @db.VarChar(120)
   moduleId    String
   module      module     @relation(fields: [moduleId], references: [id])
-  duration    Int
-  hits        Int
-  exp         Int
   completedAt DateTime?  @map("completed_at")
   exercises   exercise[]
+  userProgresses UserProgress[]
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @default(now()) @updatedAt @map("updated_at")
   deletedAt   DateTime?  @map("deleted_at")
@@ -85,4 +84,20 @@ model answer {
   createdAt  DateTime   @default(now()) @map("created_at")
   updatedAt  DateTime   @default(now()) @updatedAt @map("updated_at")
   deletedAt  DateTime?  @map("deleted_at")
+}
+
+model UserProgress {
+  id          String @id @default(cuid())
+  userId      String
+  user        user    @relation(fields: [userId], references: [id])
+  contentId   String
+  content     content @relation(fields: [contentId], references: [id])
+  duration    Int?
+  hits        Int?
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("user_progress")
 }

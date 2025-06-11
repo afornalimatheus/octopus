@@ -57,7 +57,7 @@ export class ModuleService {
       include: {
         contents: {
           orderBy: {
-            exp: 'desc',
+            createdAt: 'desc',
           },
         },
       },

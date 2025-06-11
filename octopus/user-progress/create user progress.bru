@@ -1,0 +1,28 @@
+meta {
+  name: create user progress
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{URL_DOMAIN}}/user-progress/{{userId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: {{TOKEN}}
+}
+
+body:json {
+  {
+    "contentId": "{{contentId}}",
+    "duration": 20,
+    "hits": 1
+  }
+}
+
+vars:pre-request {
+  userId: cmanofs6l0001qj15mqfthsc2
+  contentId: cmbhne09v0003l98vyk6hues5
+}
