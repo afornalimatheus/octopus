@@ -17,12 +17,12 @@ import { UserProgressModule } from './user-progress/user-progress.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'mysql_db',
+      host: 'database-1.cmwilbpjm0sa.sa-east-1.rds.amazonaws.com',
       port: 3306,
       database: 'octopus',
       entities: [],
-      username: 'root',
-      password: '123',
+      username: 'admin',
+      password: 'amanda_power_user',
       synchronize: true,
     }),
     AuthModule,
