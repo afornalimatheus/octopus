@@ -15,7 +15,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(AuthGuard)
   @Get()
   async getUsers() {
     return this.usersService.findAll();
