@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { User, CreateUserDto, type UpdateUserDto } from './dto/create-user-dto';
@@ -19,6 +19,18 @@ export class UsersService {
   }
 
   async createUser(data: CreateUserDto) {
+    const existingUser = await this.prisma.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (existingUser) {
+      throw new BadRequestException(
+        'Este e-mail já está cadastrado. Por favor, use outro ou entre em contato com o suporte.',
+      );
+    }
+
     const hashedPassword = await this.hashPassword(data.password);
 
     return this.prisma.user.create({
@@ -35,7 +47,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('Usuario não encontrado.');
     }
 
     if (data.password) {
@@ -66,11 +78,13 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('Usuario não encontrado.');
     }
 
     if (user.life <= 0) {
-      throw new Error('User has no lives left');
+      throw new BadRequestException(
+        'O usuário não tem vidas para ser removidas.',
+      );
     }
 
     const newLife = user.life - 1;
@@ -98,11 +112,11 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('Usuário não encontrado.');
     }
 
     if (user.life >= 3) {
-      throw new Error('User has maximum lives');
+      throw new BadRequestException('O máximo sao 3 vidas por usuário.');
     }
 
     const newLife = user.life + 1;
@@ -121,15 +135,17 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('Usuário não encontrado.');
     }
 
     if (user.exp < 100) {
-      throw new Error('User does not have enough experience points');
+      throw new BadRequestException(
+        'User does not have enough experience points',
+      );
     }
 
     if (user.life >= 3) {
-      throw new Error('User has maximum lives');
+      throw new BadRequestException('O máximo são 3 vidas por usuário.');
     }
 
     const newLife = user.life + 1;
@@ -152,7 +168,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('Usuario não encontrado.');
     }
 
     const newExp = user.exp + exp;
@@ -171,7 +187,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('Usuario não encontrado.');
     }
 
     const newExp = user.exp - exp;

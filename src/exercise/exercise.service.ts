@@ -26,8 +26,8 @@ export class ExerciseService {
         description,
         template,
         data: data ?? {},
-        blanks,
-        answer,
+        blanks: blanks ?? {},
+        answer: answer ?? {},
         explanation,
       },
     });
