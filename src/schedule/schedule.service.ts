@@ -13,7 +13,7 @@ export class ScheduleService {
     private readonly usersService: UsersService,
   ) {}
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_2_HOURS)
   async handleLifeRecovery() {
     const users = await this.usersService.findUsersWithOneLife();
 
