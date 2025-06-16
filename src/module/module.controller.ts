@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ModuleService } from './module.service';
@@ -46,14 +45,7 @@ export class ModuleController {
 
   @UseGuards(AuthGuard)
   @Get('/:idModule/contents')
-  async getContentModule(
-    @Param('idModule') idModule: string,
-    @Query('userId') userId?: string,
-  ) {
-    if (userId) {
-      return this.moduleService.getContentByModule(idModule, userId);
-    }
-
+  async getContentModule(@Param('idModule') idModule: string) {
     return this.moduleService.getContentModule(idModule);
   }
 

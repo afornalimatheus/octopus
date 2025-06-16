@@ -45,7 +45,7 @@ export class ContentService {
     const contents = await this.prisma.content.findMany({
       where: { moduleId: idModule },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
     });
 
@@ -76,7 +76,7 @@ export class ContentService {
   async getContent(): Promise<ContentDto[]> {
     const contents = await this.prisma.content.findMany({
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
     });
 

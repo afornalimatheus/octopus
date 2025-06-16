@@ -1,14 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import type {
   CreateUserProgressDto,
   UpdateUserProgressDto,
   UserProgressDto,
 } from './dto/user-progress-dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class UserProgressService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly usersService: UsersService,
+  ) {}
 
   async findAll(): Promise<UserProgressDto[]> {
     return await this.prisma.userProgress.findMany();
@@ -18,20 +22,49 @@ export class UserProgressService {
     return await this.prisma.userProgress.findUnique({ where: { id } });
   }
 
+  async findManyByUserId(userId: string): Promise<UserProgressDto[]> {
+    return await this.prisma.userProgress.findMany({
+      where: { userId },
+    });
+  }
+
   async create(
     id: string,
     dto: CreateUserProgressDto,
   ): Promise<CreateUserProgressDto> {
-    return await this.prisma.userProgress.create({
+    const userProgress = await this.prisma.userProgress.create({
       data: { ...dto, userId: id },
     });
+
+    if (dto.exp && dto.exp > 0) {
+      await this.usersService.addExp(id, dto.exp);
+    }
+
+    return userProgress;
   }
 
   async update(
     id: string,
     dto: UpdateUserProgressDto,
   ): Promise<UpdateUserProgressDto> {
-    return await this.prisma.userProgress.update({ where: { id }, data: dto });
+    const userProgress = await this.prisma.userProgress.update({
+      where: { id },
+      data: dto,
+    });
+
+    if (dto.exp && dto.exp > 0) {
+      const userProgressRecord = await this.prisma.userProgress.findUnique({
+        where: { id },
+      });
+
+      if (!userProgressRecord) {
+        throw new BadRequestException('Progresso do usuário não encontrado');
+      }
+
+      await this.usersService.addExp(userProgressRecord.userId, dto.exp);
+    }
+
+    return userProgress;
   }
 
   async remove(userId: string): Promise<UserProgressDto> {
@@ -40,7 +73,7 @@ export class UserProgressService {
     });
 
     if (!userProgress) {
-      throw new Error(
+      throw new BadRequestException(
         `Não foi encontrado nenhum progresso para o usuário ${userId}`,
       );
     }

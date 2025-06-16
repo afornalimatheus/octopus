@@ -51,7 +51,7 @@ export class ModuleService {
     });
   }
 
-  async getContentModule(idModule: string, userId?: string): Promise<any> {
+  async getContentModule(idModule: string): Promise<ModuleDto> {
     const module = await this.prisma.module.findUnique({
       where: { id: idModule },
       include: {
@@ -59,14 +59,6 @@ export class ModuleService {
           orderBy: {
             createdAt: 'desc',
           },
-          include: userId
-            ? {
-                userProgresses: {
-                  where: { userId },
-                  select: { completedAt: true },
-                },
-              }
-            : undefined,
         },
       },
     });
@@ -75,21 +67,13 @@ export class ModuleService {
       throw new Error('O módulo enviado não existe.');
     }
 
-    // Se userId foi informado, adiciona o campo completed em cada content
-    if (userId) {
-      module.contents = module.contents.map((content: any) => ({
-        ...content,
-        completed: !!(content.userProgresses[0]?.completedAt),
-      }));
-    }
-
     return module;
   }
 
   async getModule(): Promise<ModuleDto[]> {
     const modules = await this.prisma.module.findMany({
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
     });
 
@@ -121,23 +105,5 @@ export class ModuleService {
     }
 
     return module;
-  }
-
-  async getContentByModule(moduleId: string, userId: string): Promise<any[]> {
-    const contents = await this.prisma.content.findMany({
-      where: { moduleId },
-      include: {
-        userProgresses: {
-          where: { userId },
-          select: { completedAt: true },
-        },
-      },
-    });
-
-    // Adiciona o campo completed dinamicamente
-    return contents.map(content => ({
-      ...content,
-      completed: !!(content.userProgresses[0]?.completedAt),
-    }));
   }
 }
