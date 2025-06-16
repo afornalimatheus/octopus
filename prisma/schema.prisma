@@ -14,18 +14,18 @@ datasource db {
 }
 
 model user {
-  id                  String   @id @default(cuid())
+  id                  String         @id @default(cuid())
   name                String
-  email               String   @unique
+  email               String         @unique
   password            String
-  exp                 Int      @default(0)
-  life                Int      @default(3)
-  alreadyDoneTutorial Boolean  @default(false) @map("already_done_tutorial")
-  lastLifeLostAt      DateTime? @map("last_life_lost_at")
+  exp                 Int            @default(0)
+  life                Int            @default(3)
+  alreadyDoneTutorial Boolean        @default(false) @map("already_done_tutorial")
+  lastLifeLostAt      DateTime?      @map("last_life_lost_at")
   answers             answer[]
   userProgresses      UserProgress[]
-  createdAt           DateTime @default(now()) @map("created_at")
-  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @default(now()) @updatedAt @map("updated_at")
 }
 
 model module {
@@ -38,16 +38,16 @@ model module {
 }
 
 model content {
-  id          String     @id @default(cuid())
-  label       String     @db.VarChar(120)
-  moduleId    String
-  module      module     @relation(fields: [moduleId], references: [id])
-  completedAt DateTime?  @map("completed_at")
-  exercises   exercise[]
+  id             String         @id @default(cuid())
+  label          String         @db.VarChar(120)
+  moduleId       String
+  module         module         @relation(fields: [moduleId], references: [id])
+  completedAt    DateTime?      @map("completed_at")
+  exercises      exercise[]
   userProgresses UserProgress[]
-  createdAt   DateTime   @default(now()) @map("created_at")
-  updatedAt   DateTime   @default(now()) @updatedAt @map("updated_at")
-  deletedAt   DateTime?  @map("deleted_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @default(now()) @updatedAt @map("updated_at")
+  deletedAt      DateTime?      @map("deleted_at")
 }
 
 enum ExerciseType {
@@ -58,41 +58,42 @@ enum ExerciseType {
 }
 
 model exercise {
-  id          String        @id @default(cuid())
+  id          String       @id @default(cuid())
   contentId   String
-  content     content       @relation(fields: [contentId], references: [id])
+  content     content      @relation(fields: [contentId], references: [id])
   type        ExerciseType
-  description String        @db.Text
-  template    String        @db.Text
+  description String       @db.Text
+  template    String       @db.Text
   data        Json
-  blanks      String        @db.Text
-  answer      String        @db.Text
-  explanation String        @db.Text
+  blanks      Json?
+  answer      Json
+  explanation String       @db.Text
   answers     answer[]
-  createdAt   DateTime      @default(now()) @map("created_at")
-  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at")
-  deletedAt   DateTime?     @map("deleted_at")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @default(now()) @updatedAt @map("updated_at")
+  deletedAt   DateTime?    @map("deleted_at")
 }
 
 model answer {
-  id         String     @id @default(cuid())
+  id         String    @id @default(cuid())
   userId     String
-  user       user       @relation(fields: [userId], references: [id])
+  user       user      @relation(fields: [userId], references: [id])
   exerciseId String
-  exercise   exercise   @relation(fields: [exerciseId], references: [id])
-  answer     String     @db.VarChar(300)
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime   @default(now()) @updatedAt @map("updated_at")
-  deletedAt  DateTime?  @map("deleted_at")
+  exercise   exercise  @relation(fields: [exerciseId], references: [id])
+  answer     Json
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @default(now()) @updatedAt @map("updated_at")
+  deletedAt  DateTime? @map("deleted_at")
 }
 
 model UserProgress {
-  id          String @id @default(cuid())
+  id          String    @id @default(cuid())
   userId      String
-  user        user    @relation(fields: [userId], references: [id])
+  user        user      @relation(fields: [userId], references: [id])
   contentId   String
-  content     content @relation(fields: [contentId], references: [id])
+  content     content   @relation(fields: [contentId], references: [id])
   duration    Int?
+  exp         Int?
   hits        Int?
   completedAt DateTime? @map("completed_at")
   createdAt   DateTime  @default(now()) @map("created_at")

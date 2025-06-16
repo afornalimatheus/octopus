@@ -32,6 +32,12 @@ export class UserProgressController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('/userId/:id')
+  async findManyByUserId(@Param('id') id: string) {
+    return await this.userProgressService.findManyByUserId(id);
+  }
+
+  @UseGuards(AuthGuard)
   @Post(':id')
   async create(
     @Param('id') id: string,

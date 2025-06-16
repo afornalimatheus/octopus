@@ -29,6 +29,12 @@ export class AnswerController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('exercise/:exerciseId')
+  async findOneByExerciseId(@Param('exerciseId') exerciseId: string) {
+    return this.answerService.findOneByExerciseId(exerciseId);
+  }
+
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() answerDto: AnswerDto) {
     return this.answerService.create(answerDto);
@@ -38,6 +44,15 @@ export class AnswerController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() answerDto: AnswerDto) {
     return this.answerService.update(id, answerDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/exerciseId/:id')
+  async updateByExerciseId(
+    @Param('id') exerciseId: string,
+    @Body() answerDto: AnswerDto,
+  ) {
+    return this.answerService.updateByExerciseId(exerciseId, answerDto);
   }
 
   @UseGuards(AuthGuard)
