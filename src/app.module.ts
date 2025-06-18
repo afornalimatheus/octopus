@@ -17,7 +17,7 @@ import { UserProgressModule } from './user-progress/user-progress.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'database-1.cmwilbpjm0sa.sa-east-1.rds.amazonaws.com',
+      host: '54.94.221.214',
       port: 3306,
       database: 'octopus',
       entities: [],
